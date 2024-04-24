@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner</title>
+    <!-- Include Instascan library -->
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    <style>
+        body {
+            display: block;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #preview {
+            width: 80vw;
+            max-width: 500px;
+        
+            height: auto;
+            margin-left:450px;
+            margin-top:300px;
+            border: 2px solid #000;
+        }
+     
+    </style>
+</head>
+<body>
+    
+    <video id="preview"></video>
+    <div id="result"></div>
+
+    <script>
+        // Initialize Instascan
+        let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+        
+        // Add listener for when a QR code is scanned
+        scanner.addListener('scan', function (content) {
+            document.getElementById('result').innerText = 'Scanned: ' + content;
+            
+            // Send the scanned data to the server
+            sendScannedData(content);
+            
+            // Stop scanning after successful scan
+            scanner.stop();
+        });
+        
+        // Function to send scanned data to the server
+        function sendScannedData(data) {
+            // Define the server URL to which the data will be sent
+            const url = `/admin/scan`;
+            
+            // Define the data to be sent (in JSON format)
+            let jsonData = JSON.stringify({ 'qr_data': data });
+            
+            
+            // Configure the fetch request
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Data sent successfully.');
+                } else {
+                    console.error('Failed to send data. Error code: ' + response.status);
+                }
+            })
+            .catch(error => {
+                console.error('Error sending data:', error);
+            });
+        }
+        
+        // Start scanning
+        Instascan.Camera.getCameras().then(function (cameras) {
+            if (cameras.length > 0) {
+                scanner.start(cameras[0]); // Use the first available camera
+            } else {
+                console.error('No cameras found.');
+            }
+        }).catch(function (error) {
+            console.error(error);
+        });
+    </script>
+</body>
+</html>

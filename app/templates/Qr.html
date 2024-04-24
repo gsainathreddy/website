@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #555456;
+        }
+        h2{
+            text-align: center;
+            color: azure;
+        }
+        .content {
+    text-align: center;
+}
+
+.qr-images {
+    margin-top: 20px;
+}
+
+.qr-images img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+}
+    </style>
+</head>
+<body>
+    <div class="content" >
+        
+        <h2>Scan image for class</h2>
+        <div class="qr-images">
+            {% for qr_image_path in event_qr_images %}
+                <img src="{{ url_for('static', filename='qr/'+qr_image_path) }}" >
+            {% endfor %}
+        </div>
+    
+</body>
+</html>
+    

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Navbar</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Reset default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+            background-color:color-mix(in srgb, #F2AB39 50%, #563C16 50%);
+        }
+    
+        /* Style the navbar */
+        .navbar {
+            
+            color: #fff;
+            padding: 20px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            background-color: black;
+        }
+    
+        /* Container to center the content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            background-color: black;
+            justify-content: space-between;
+            align-items: center;
+        }
+    
+        /* Logo style */
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .slideshow-container {
+            max-width: 1400px;
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+        }
+    
+        .slide {
+            display: none;
+        }
+    
+        img {
+            width: 100%; /* Set width to 100% to make images responsive */
+            height: auto;
+        }
+    
+        .border {
+            display: flex;
+            align-items: center;
+        
+            padding-left: 0px;
+            text-align: center;
+            height: 670px;
+        }
+    
+        .border > * {
+            flex-basis: 100%;
+        }
+    
+        .container1 {
+            width: 100%;
+            border-radius: 5px;
+            padding-left: 0;
+    
+        }
+    
+        .form {
+            padding: 70px;
+            margin-left: 100px; /* Move login form to the right */
+            justify-content: space-between;
+            width: 60%;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            
+        }
+    
+        input {
+            display: flex;
+            gap: 60px 50px;
+            margin-left: 90px;
+            width: 50%;
+            padding: 10px;
+            text-align: center;
+        }
+    
+        .textbox {
+            background-color: azure;
+            box-sizing: border-box;
+        }
+    
+        .msg {
+            color: black;
+            padding: 40px;
+        }
+    
+        .bottom {
+            display: flex-block;
+            padding: 10px;
+        }
+        button,p{
+            margin-left:0px;
+        }
+       
+    
+        /* Media queries for responsive design */
+        @media (max-width: 768px) {
+            .container,
+            .border {
+                flex-direction: column;
+            }
+    
+            .slideshow-container,
+            .container1 {
+                max-width: 100%;
+                
+
+            }
+    
+            .slideshow-container {
+                margin-bottom: 20px;
+                height: 0px;
+
+            }
+    
+            .container1 {
+                width: 80%;
+                padding-left: 0;
+            }
+        }
+    </style>
+    
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="container">
+        <div class="logo">Sairam</div>
+    </div>
+</nav>
+
+<div class="border">
+    <div class="slideshow-container">
+        <div class="slide fade">
+            <img src="static\img\Vethathiri-Maharishi-Ponmozhigal-In-Tamil.jpg" style=" width:750px;height:670px">
+        </div>
+        <div class="slide fade">
+            <img src="static\img\1619409118.chakras-1.jpg" style="height: 670px;">
+        </div>
+        <div class="slide fade">
+            <img src="static\img\helping_hands1.jpg" style="height:670px;">
+        </div>
+    </div>
+
+    <div class="container1">
+        <form id="loginForm" action="{{ url_for('routes.login') }}" method="post" class="form">
+            <h1>Login</h1>
+            <div class="msg">{{ msg }}</div>
+            <input type="email" placeholder="Email" name="email" class="textbox" required><br>
+            <input type="password" placeholder="Password" name="password" class="textbox" required><br>
+            <button type="submit">Login</button>
+            <p class="bottom"> Want To register <a class="bottom" style="color:black" href="{{url_for('routes.register')}}">Click Me</a></p>
+        </form>
+    </div>
+</div>
+
+<script>
+    var slideIndex = 0;
+    showSlides();
+
+    function showSlides() {
+        var i;
+        var slides = document.getElementsByClassName("slide");
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        slideIndex++;
+        if (slideIndex > slides.length) {slideIndex = 1}
+        slides[slideIndex-1].style.display = "block";
+        setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+</script>
+
+</body>
+</html>

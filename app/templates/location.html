@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: color-mix(in srgb, blue 50%, rgb(152, 147, 147) 30%);
+            text-align: center;
+        }
+        .form {
+            width: 40%;
+            margin: 100px;
+            margin-left:200px;
+            border-radius: 5px solid red;
+            text-align: center;
+           
+        }
+        table {
+            width: 60%;
+            
+          
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+            padding: 8px;
+            margin-left:200px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+       
+    </style>
+</head>
+<body>
+    <div class="form">
+    <form action="{{ url_for('routes.add_location') }}" method="POST">
+        <h2>Add Location</h2>
+        <label for="location">Location</label><br>
+        <input type="text" name="location" id="location"><br>
+        {% if error_message and not request.form.get('location') %}
+        <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+        <label for="address">Address</label><br>
+        <input type="text" name="address" id="address"><br>
+        {% if error_message and not request.form.get('address') %}
+        <p style="color: red;">{{ error_message }}</p>
+        {% endif %}
+        <input type="submit" value="Submit">
+    </form>
+    </div>
+    {% if locations %}
+    <div style="overflow-x:auto;">
+       
+        <table>
+            <tr>
+                <th>Location</th>
+                <th>Address</th>
+            </tr>
+            {% for location in locations %}
+            <tr>
+                <td>{{ location.location_name }}</td>
+                <td>{{ location.address }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+ 
+</body>
+</html>

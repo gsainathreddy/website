@@ -1,0 +1,50 @@
+{% block code %}
+<style>
+    body{
+        background-color:rgb(100,0,150);
+        margin:0;
+
+    }
+    table {
+        margin:0;
+        background-color:white;
+        text-align: center;
+        
+        border: 2px solid red ;
+        font-size: larger;
+        width:100%;
+    }
+    table,th,td{
+        border:0.5 px solid red
+    }
+ 
+</style>
+<table>
+    <thead>
+    <tr>
+    <th>Name</th>
+    <th>Mail</th>
+    <th>Event</th>
+    <th>start</th>
+    <th>End</th>
+    <th>Tutor</th>
+    </tr>
+    </thead>
+    {% for event in events %}
+    <tbody>
+     <tr>
+    
+        <td>{{event['user_name']}}</td>
+        <td>{{event['user_email']}}</td>
+        <td>{{event['event_name']}}</td>
+        <td>{{event['start_time']}}</td>
+        <td>{{event['end_time']}}</td>
+        <td>{{event['tutor']}}</td>
+    
+    </tr>
+    </tbody>
+    {% endfor %}
+</table>
+
+
+{% endblock %}

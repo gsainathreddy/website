@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="tableevents">
+        <table class="table_events">
+             <thead>
+                 <tr>
+                     <th>Event ID</th>
+                     <th>Event Name</th>
+                     <th>Start Time</th>
+                     <th>End Time</th>
+                 </tr>
+             </thead>
+             <tbody>
+                 {% for event in event_list %}
+                 <tr>
+                     <td>{{ event['id']}}</td>
+                     <td>{{ event['name']}}</td>
+                     <td>{{ event['start_time'] }}</td>
+                     <td>{{ event['end_time'] }}</td>
+                     <td>        
+                         {% if user_role =='admin' %}
+                         <a href="{{ url_for('routes.editevents', event_id=event['id']) }}">Edit</a>
+                    </td>
+                     <form action="{{ url_for('routes.delete_event', event_id=event['id']) }}" method="POST">
+                         <input type="hidden" name="event_id" value="{{ event['id'] }}">
+                        <td> <button type="submit">Delete</button></td>
+                     </form>
+                     {% endif %}
+                     <form action ="{{url_for('routes.register_event',event_id=event['id'])}}" method="POST">
+                         <input type="hidden" name="event_id" value="{{event['id']}}">
+                         <td><button type="submit">register_event</button></td>
+
+                     </form>
+                 
+                 </tr>
+                 {% endfor %}
+             </tbody>
+         </table>
+         </div>
+     
+    
+     </div>
+    
+    
+</body>
+</html>

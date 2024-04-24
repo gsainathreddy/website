@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    {% include 'sidebar.html' %}
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+          
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: block;
+            justify-content: center;
+            align-items: center;
+            
+        }
+
+        table {
+            width: 100%;
+            margin-top: 0px;
+            margin-left: 5px;
+            padding: 0px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1px;
+            text-align: left;
+            border-bottom: 0px solid #ddd;
+            font-size: large;
+        }
+
+        td{
+            padding: 3px;
+        }
+
+        th {
+            background-color:color-mix(in srgb,  red 70%,  pink 60%);;
+            color: white;
+        }
+
+        tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .actions-container {
+            display: flex; /* Set container to flex */
+            align-items: center; /* Align items vertically */
+        }
+
+        .actions-container a,
+        .actions-container button {
+            margin-right: 5px; /* Add margin between them */
+        }
+
+        a, button {
+            display: inline-flex;
+            margin: 5px;
+            padding: 10px 10px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 3px;
+            cursor: pointer;
+            vertical-align: top;
+        }
+
+        a {
+            background-color:color-mix(in srgb,  blue 70%,  pink 60%);;
+            display: inline-block;
+        }
+
+        a:hover {
+            background-color:color-mix(in srgb,  blue 70%,  pink 60%);;
+        }
+
+        button {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 3px;
+            background-color: #dc3545;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>Actions</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Relation</th>
+                <th>Mobile</th>
+                <th>V</th>
+                <th>B</th>
+                <th>A</th>
+                <th>E</th>
+                <th>F</th>
+                <th>T</th>
+                <th>Ev</th>
+                <th>S</th>
+                <th><form id="bulk-approve-form" action="{{ url_for('routes.approve_all_users') }}" method="POST" style="display: inline;">
+                    <input type="checkbox" id="bulk-approve-checkbox" onclick="toggleBulkApproveCheckbox({{count}})">
+                    <label for="bulk-approve-checkbox"></label>
+                </form></th>
+
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td class="actions-container">
+                    <!-- Wrap actions in a container -->
+                    <a href="{{ url_for('routes.edit_user', user_id=user.id) }}"><i class="fa fa-edit" style="font-size:20px;color:white"></i></a>
+                    <form method="post" action="{{ url_for('routes.delete_user', user_id=user.id) }}">
+                        <button type="submit" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fa fa-trash" style="font-size:20px;color:white"></i></button>
+                    </form>
+                </td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.relationship }}</td>
+                <td>{{ user.mobile }}</td>
+                <td><input type="checkbox" {% if user.volunteer=="yes" %} checked {% endif %}></td> 
+                <td><input type="checkbox" {% if user.basic =="yes" %} checked {% endif %}></td>
+                <td><input type="checkbox" {% if user.advanced =='yes'%} checked {% endif %}></td>
+                <td><input type="checkbox" {% if user.expert =='yes' %} checked {% endif %}></td>
+                <td><input type="checkbox" {% if user.food =='yes'%} checked {% endif %}></td>
+                <td><input type="checkbox" {% if user.transport=="yes" %} checked {% endif %}></td>
+                <td><input type="checkbox" {% if user.event=="yes" %} checked {% endif %}></td>
+                <td>
+                    {% if user.status != 'approve' %}
+                    <input type="checkbox" id="approveCheckbox{{ user.id }}" {% if user.status == "approve" %} checked {% endif %} data-user-id="{{ user.id }}" onchange="confirmApproval('{{ user.id }}');">
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.status != 'approve' %}
+                    <form id="approveForm{{ user.id }}" action="{{ url_for('routes.approve_user', user_id=user.id) }}" method="POST">
+                        <input type="hidden" name="approval" value="1"> <!-- Add a hidden input field to indicate approval -->
+                        <button type="button" onclick="confirmApproval('{{ user.id }}')">Approve</button>
+                    </form> 
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+          
+        </tbody>
+    </table>
+    
+
+    <script>
+        function toggleBulkApproveCheckbox(count) {
+            var checkbox = document.getElementById("bulk-approve-checkbox");
+            if (checkbox.checked) {
+                if (confirm("Are you sure you want to bulk approve {{ count }} users?")) {
+                    document.getElementById("bulk-approve-form").submit();
+                } else {
+                    checkbox.checked = false;
+                }
+            }
+        }
+    
+        function confirmApproval(userId) {
+            if (confirm("Are you sure you want to approve this user?")) {
+                // If user confirms, submit the form
+                document.getElementById('approveForm' + userId).submit();
+            } else {
+                // If user cancels, uncheck the checkbox
+                document.getElementById('approveCheckbox' + userId).checked = false;
+            }
+        }
+    </script>
+    
+</body>
+</html>

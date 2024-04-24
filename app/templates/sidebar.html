@@ -1,0 +1,184 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+       body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.navbar {
+    background-color:color-mix(in srgb,  blue 70%,  pink 60%);
+    color: #fff;
+    padding: 15px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-header h4 {
+    margin: 0;
+    color: white;
+    font-size: 24px;
+}
+
+.navbar-nav {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav li {
+    margin: 0 10px;
+}
+
+.navbar-nav a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.navbar-nav a:hover {
+    color: #e0e0e0;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown .dropbtn {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dropdown .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color:color-mix(in srgb,  blue 70%,  pink 60%);
+    min-width: 150px;
+    z-index: 1;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown .dropdown-menu a {
+    display: block;
+    padding: 10px;
+    color: #fff;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.dropdown .dropdown-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .navbar-nav {
+        margin-top: 10px;
+    }
+
+    .navbar-nav li {
+        margin: 5px 0;
+    }
+
+    .navbar-nav a {
+        padding: 10px 20px;
+    }
+
+    .dropdown .dropbtn {
+        padding: 10px 20px;
+    }
+
+    .dropdown .dropdown-menu {
+        position: static;
+        display: none;
+        background-color: transparent;
+        box-shadow: none;
+        min-width: auto;
+    }
+
+    .dropdown:hover .dropdown-menu {
+        display: none;
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-header">
+            
+        </div>
+        <ul class="navbar-nav">
+            <li>
+                <a href="{{ url_for('routes.home') }}">
+                    <i class="fa fa-home"></i> Home
+                </a>
+            </li>
+            
+            <li class="dropdown">
+                <a href="#" class="dropbtn">
+                    <i class="fa fa-plus"></i> Add
+                </a>
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('routes.add_user') }}">
+                        <i class="fa fa-user-plus"></i> Add User
+                    </a>
+                    <a href="{{url_for('routes.add_location')}}">
+                        <i class="fa fa-map-marker"></i> Centers
+                    </a>
+                    <a href="{{url_for('routes.upload')}}">
+                        <i class="fa fa-calendar"></i> Event
+                    </a>
+                </div>
+            </li>
+         
+            <li>
+                <a href="{{ url_for('routes.users_view') }}">
+                    <i class="fa fa-users"></i> View Users
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('routes.events') }}">
+                    <i class="fa fa-calendar"></i> Events
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('routes.logout') }}">
+                    <i class="fa fa-sign-out"></i> Logout
+                </a>
+            </li>
+            <li>
+                <a href="{{ url_for('routes.scan') }}">
+                    <i class="fa fa-qrcode"></i> Scan
+                </a>
+            </li>
+        </ul>
+    </div>
+</body>
+</html>
+{% endblock %}

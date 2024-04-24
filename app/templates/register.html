@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body {
+      margin: 70px;
+      font-family: Arial, sans-serif;
+     /* Replace with your background image path */
+      
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+    }
+
+    .div1 {
+      background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      text-align: center;
+    }
+
+    form {
+      width: 600px;
+      margin: auto;
+    }
+
+    h2 {
+      color: #333;
+    }
+
+    .msg {
+      color: #FF0000; /* Red color for error/success messages */
+      margin-bottom: 10px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      text-align: center;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color: #45a049;
+    }
+    @media (max-width:500px){
+      body{
+        margin: 0;
+      }
+      
+      form{
+        width:300px;
+      }
+      .btn{
+        font-size: 10px;
+        
+      }
+
+    }
+  </style>
+</head>
+<body>
+  <div class="div1">
+    <form action="{{url_for('routes.register')}}" method='POST' class="form">
+      <h2>Registration Form</h2>
+      <div class="msg">{{ msg }}</div>
+      <input type="text" name="name" placeholder="Enter Your Username" class="textbox" id="name" required></br>
+      <input type="email" name="email" placeholder="Email" class="textbox" id="email" required></br>
+      <input type="password" name="password" placeholder="Password" class="textbox" id="password" required></br>
+      <input type="text" name="relationship" placeholder="Relationship" class="textbox" id="relationship" required></br>
+      
+      <input type="tel" placeholder="mobile" name="mobile" class="'textbox" pattern="[0-9]{10}" required><br>
+      <input type="submit" class="btn" value="Register">
+    </form>
+  </div>
+</body>
+</html>
